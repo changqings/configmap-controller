@@ -98,7 +98,7 @@ func RunManager() error {
 				if _, ok := tue.ObjectNew.GetAnnotations()[controllerLeader]; ok {
 					return false
 				}
-				// only data changed will trigger reconcile and have special labels
+				// only data changed and have special labels will trigger reconcile
 				if v, ok := tue.ObjectNew.GetLabels()[localcontroller.ConfigRetartKey]; !(ok && v == localcontroller.ConfigRetartValue) {
 					return false
 				}
