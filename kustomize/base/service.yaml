@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: configmap-controller
+spec:
+  ipFamilies:
+    - IPv4
+  ports:
+    - name: http-80
+      port: 80
+      protocol: TCP
+      targetPort: http
+  sessionAffinity: None
+  type: ClusterIP

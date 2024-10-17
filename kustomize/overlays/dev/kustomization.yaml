@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+images:
+  - name: image_name
+    newName: REGISTRY_ADDR
+    newTag: VERSION_TAG
+kind: Kustomization
+namespace: default
+resources:
+  - ../../base
+labels:
+  - includeSelectors: true
+    pairs:
+      app: configmap-controller
