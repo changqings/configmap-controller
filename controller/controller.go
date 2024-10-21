@@ -24,6 +24,9 @@ var (
 
 	ConfigRetartKey   = "configrestart/deployment"
 	ConfigRetartValue = "enable"
+
+	configMapControllerRestartAnnotation = "configmap-controller/restart"
+	configMapControllerFieldManager      = "configmap-controller"
 )
 
 var _ reconcile.Reconciler = &ReconcileConfig{}
@@ -72,9 +75,9 @@ func restartDeployment(ctx context.Context, c client.Client, deploymentName, ns 
 	if deploy.Spec.Template.Annotations == nil {
 		deploy.Spec.Template.Annotations = make(map[string]string)
 	}
-	deploy.Spec.Template.Annotations["configmap-restart/restart"] = time.Now().Format(time.RFC3339)
+	deploy.Spec.Template.Annotations[configMapControllerRestartAnnotation] = time.Now().Format(time.RFC3339)
 
-	err = c.Update(ctx, &deploy, &client.UpdateOptions{FieldManager: "configmap-restart-controller"})
+	err = c.Update(ctx, &deploy, &client.UpdateOptions{FieldManager: configMapControllerFieldManager})
 	if err != nil {
 		return err
 	}
